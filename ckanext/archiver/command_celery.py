@@ -7,6 +7,10 @@ from celery import Celery
 
 from ckan.lib.cli import CkanCommand
 
+# Fix for Kombu 2.5.0 and Python 2.7.11+
+import uuid
+if not hasattr(uuid, '_uuid_generate_random'):
+    uuid._uuid_generate_random = None
 
 class CeleryCmd(CkanCommand):
     '''
