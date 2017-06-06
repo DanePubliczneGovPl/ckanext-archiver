@@ -13,7 +13,6 @@ import mimetypes
 import re
 import routes
 import time
-import urlparse
 
 from requests.packages import urllib3
 
@@ -555,6 +554,7 @@ def archive_resource(context, resource, log, result=None, url_timeout=30):
     parsed_url = urlparse.urlparse(resource.get('url'))
     try:
         file_name = parsed_url.path.split('/')[-1] or 'resource'
+        file_name = urllib.unquote(file_name)
         file_name = file_name.strip()  # trailing spaces cause problems
         file_name = file_name.encode('ascii', 'ignore')  # e.g. u'\xa3' signs
     except:
